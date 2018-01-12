@@ -1,72 +1,79 @@
-<!doctype html>
-<script src=lib/codemirror.js></script>
-<link rel="stylesheet" href="lib/codemirror.css">
-<script src=mode/htmlmixed/htmlmixed.js></script>
-<script src=mode/javascript/javascript.js></script>
-<script src=mode/css/css.js></script>
-<style type=text/css>
-  .CodeMirror {
-    float: left;
-    width: 50%;
-    border: 1px solid black;
-  }
-  iframe {
-    width: 49%;
-    float: left;
-    height: 300px;
-    border: 1px solid black;
-    border-left: 0px;
-  }
-</style>
-<p>マイアカウント</p>
-<ul>
-<li>テキスト</li>
-<li>テキスト</li>
-<li>テキスト</li>
-<li>テキスト</li>
-</ul>
-<article>
-  <h2>HTML5 preview</h2>
-  <textarea id=code name=code>
-<style>
-  ul, ol{
-    color: #668ad8;
-    border: dashed 2px #668ad8;
-    background: #f1f8ff;
-    padding: 0.5em 0.5em 0.5em 2em;
-  }
-  ul li, ol li {
-    line-height: 1.5;
-    padding: 0.5em 0;
-  }
-</style>
-<p>マイアカウント</p>
-<ul>
-  <li>テキスト</li>
-  <li>テキスト</li>
-  <li>テキスト</li>
-  <li>テキスト</li>
-</ul>
-  </textarea>
-  <iframe id=preview></iframe>
-  <script>
-    var delay;
-    // Initialize CodeMirror editor with a nice html5 canvas demo.
-    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
-      mode: 'text/html'
-    });
-    editor.on("change", function() {
-      clearTimeout(delay);
-      delay = setTimeout(updatePreview, 300);
-    });
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <script src=lib/codemirror.js></script>
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <script src=mode/htmlmixed/htmlmixed.js></script>
+    <script src=mode/javascript/javascript.js></script>
+    <script src=mode/css/css.js></script>
+    <style type=text/css>
+      .CodeMirror {
+        float: left;
+        width: 50%;
+        border: 1px solid black;
+      }
+      iframe {
+        width: 49%;
+        float: left;
+        height: 300px;
+        border: 1px solid black;
+        border-left: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <p>マイアカウント</p>
+    <ul>
+    <li>テキスト</li>
+    <li>テキスト</li>
+    <li>テキスト</li>
+    <li>テキスト</li>
+    </ul>
+    <article>
+      <h2>HTML5 preview</h2>
+      <textarea id=code name=code>
+    <style>
+      ul, ol{
+        color: #668ad8;
+        border: dashed 2px #668ad8;
+        background: #f1f8ff;
+        padding: 0.5em 0.5em 0.5em 2em;
+      }
+      ul li, ol li {
+        line-height: 1.5;
+        padding: 0.5em 0;
+      }
+    </style>
+    <p>マイアカウント</p>
+    <ul>
+      <li>テキスト</li>
+      <li>テキスト</li>
+      <li>テキスト</li>
+      <li>テキスト</li>
+    </ul>
+      </textarea>
+      <iframe id=preview></iframe>
+      <script>
+        var delay;
+        // Initialize CodeMirror editor with a nice html5 canvas demo.
+        var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+          mode: 'text/html'
+        });
+        editor.on("change", function() {
+          clearTimeout(delay);
+          delay = setTimeout(updatePreview, 300);
+        });
 
-    function updatePreview() {
-      var previewFrame = document.getElementById('preview');
-      var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
-      preview.open();
-      preview.write(editor.getValue());
-      preview.close();
-    }
-    setTimeout(updatePreview, 300);
-  </script>
-</article>
+        function updatePreview() {
+          var previewFrame = document.getElementById('preview');
+          var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
+          preview.open();
+          preview.write(editor.getValue());
+          preview.close();
+        }
+        setTimeout(updatePreview, 300);
+      </script>
+    </article>
+  </body>
+</html>
