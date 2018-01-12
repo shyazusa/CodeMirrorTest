@@ -1,68 +1,44 @@
-<!doctype html>
-<script src=lib/codemirror.js></script>
-<link rel="stylesheet" href="lib/codemirror.css">
-<script src=mode/htmlmixed/htmlmixed.js></script>
-<script src=mode/javascript/javascript.js></script>
-<script src=mode/css/css.js></script>
-<style type=text/css>
-  .CodeMirror {
-    float: left;
-    width: 50%;
-    border: 1px solid black;
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajaxorg.github.io/ace-builds/src/ace.js"></script>
+<style>
+  html, body { height: 100% }
+  #editor, #return { height: 50% }
+</style>
+<pre id="editor">
+<style>
+  ul, ol{
+    color: #668ad8;
+    border: dashed 2px #668ad8;
+    background: #f1f8ff;
+    padding: 0.5em 0.5em 0.5em 2em;
   }
-  iframe {
-    width: 49%;
-    float: left;
-    height: 300px;
-    border: 1px solid black;
-    border-left: 0px;
+  ul li, ol li {
+    line-height: 1.5;
+    padding: 0.5em 0;
   }
 </style>
-<article>
-  <h2>HTML5 preview</h2>
-  <textarea id=code name=code>
-    <!doctype html>
-    <html>
-      <head>
-        <meta charset=utf-8>
-        <title>HTML5 canvas demo</title>
-        <style>p {font-family: monospace;}</style>
-      </head>
-      <body>
-        <p>Canvas pane goes here:</p>
-        <canvas id=pane width=300 height=200></canvas>
-        <script>
-          var canvas = document.getElementById('pane');
-          var context = canvas.getContext('2d');
+<p>マイアカウント</p>
+<ul>
+  <li>テキスト</li>
+  <li>テキスト</li>
+  <li>テキスト</li>
+  <li>テキスト</li>
+</ul>
+</pre>
+<div id="return"></div>
+<script>
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/twilight");
+  editor.session.setMode("ace/mode/html");
 
-          context.fillStyle = 'rgb(250,0,0)';
-          context.fillRect(10, 10, 55, 50);
-
-          context.fillStyle = 'rgba(0, 0, 250, 0.5)';
-          context.fillRect(30, 30, 55, 50);
-        </script>
-      </body>
-    </html>
-  </textarea>
-  <iframe id=preview></iframe>
-  <script>
-    var delay;
-    // Initialize CodeMirror editor with a nice html5 canvas demo.
-    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
-      mode: 'text/html'
-    });
-    editor.on("change", function() {
-      clearTimeout(delay);
-      delay = setTimeout(updatePreview, 300);
-    });
-
-    function updatePreview() {
-      var previewFrame = document.getElementById('preview');
-      var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
-      preview.open();
-      preview.write(editor.getValue());
-      preview.close();
-    }
-    setTimeout(updatePreview, 300);
-  </script>
-</article>
+  function showHTML() {
+    $('#return').html(editor.getValue());
+  }
+  // or use data: url to handle things like doctype
+  function showHTMLInIFrame() {
+    $('#return').html(
+      "<iframe src=" + "data:text/html," + encodeURIComponent(editor.getValue()) + "></iframe>"
+    );
+  }
+  editor.on("input", showHTMLInIFrame)
+</script>
